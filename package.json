@@ -2,9 +2,9 @@
   "name": "Product Management System API",
   "version": "1.0.0",
   "description": "This is RESTful API for Product Management System.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
