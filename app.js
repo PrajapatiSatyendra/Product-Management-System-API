@@ -15,7 +15,9 @@ const app=express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
+app.use('/', (req, res, next) => {
+  res.send("Hello");
+})
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/product',ProductsRoutes);
 app.use('/api/auth',authRoutes);
