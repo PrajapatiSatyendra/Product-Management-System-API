@@ -24,9 +24,11 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/product',ProductsRoutes);
-app.use('/api/auth',authRoutes);
+app.use('/api/auth', authRoutes);
+
 app.use((error,req,res,next)=>{
     console.log(error);
     const status=error.statusCode ||500;

@@ -8,11 +8,13 @@ const options = {
     openapi: "3.0.0",
     info: {
       title: "Product Management System API",
+      description:
+        "This is a basic REST API for Product Management. It focuses on CRUD operations with authentication and authorization",
       version,
     },
     servers: [
       {
-        url: "https://product-manage-api.vercel.app",
+        url: process.env.BASEURL,
       },
     ],
   },

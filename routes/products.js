@@ -47,7 +47,7 @@ router.get("/getProducts", productController.getProducts);
  * /api/product/getProductsByUserId/{userId}:
  *    get:
  *       tags:
- *          - Update Product
+ *          - Get  Products by User Id
  *       description: This API is built for fetching product by userId.
  *       parameters:
  *          - in: path
@@ -85,20 +85,13 @@ router.get(
 
 /**
  * @openapi
- * /api/product/addProduct/{userId}:
+ * /api/product/addProduct:
  *    post:
  *       tags:
  *          - Add Product
  *       description: User can add the product. To add the product user has to authenticate first. User can only add product to his/her own account.
  *       security:
  *          - bearerAuth: []
- *       parameters:
- *          - in: path
- *            name: userId
- *            required: true
- *            description: user Id is required
- *            schema:
- *               type: string
  *       requestBody:
  *          required: true
  *          content:
@@ -139,13 +132,13 @@ router.get(
  * 
  */
 
-router.post("/addProduct/:userId",isAuth, productController.addProduct);
+router.post("/addProduct",isAuth, productController.addProduct);
 
 
 
 /**
  * @openapi
- * /api/product/updateProduct/{userId}/{productId}:
+ * /api/product/updateProduct/{productId}:
  *    put:
  *       tags:
  *          - Update Product
@@ -153,12 +146,6 @@ router.post("/addProduct/:userId",isAuth, productController.addProduct);
  *       security:
  *          - bearerAuth: []
  *       parameters:
- *          - in: path
- *            name: userId
- *            required: true
- *            description: User Id is required
- *            schema:
- *               type: string
  *          - in: path
  *            name: productId
  *            required: true
@@ -205,11 +192,11 @@ router.post("/addProduct/:userId",isAuth, productController.addProduct);
  * 
  */
 
-router.put("/updateProduct/:userId/:productId", isAuth, productController.updateProduct);
+router.put("/updateProduct/:productId", isAuth, productController.updateProduct);
 
 /**
  * @openapi
- * /api/product/deleteProduct/{userId}/{productId}:
+ * /api/product/deleteProduct/{productId}:
  *    delete:
  *       tags:
  *          - Delete Product
@@ -217,12 +204,6 @@ router.put("/updateProduct/:userId/:productId", isAuth, productController.update
  *       security:
  *          - bearerAuth: []
  *       parameters:
- *          - in: path
- *            name: userId
- *            required: true
- *            description: User Id is required
- *            schema:
- *               type: string
  *          - in: path
  *            name: productId
  *            required: true
@@ -264,7 +245,7 @@ router.put("/updateProduct/:userId/:productId", isAuth, productController.update
  */
 
 router.delete(
-  "/deleteProduct/:userId/:productId",
+  "/deleteProduct/:productId",
   isAuth,
   productController.deleteProduct
 );

@@ -6,7 +6,7 @@ const authController = require('../controller/auth');
 
 
 /**
- * @swagger
+ * @openapi 
  * /api/auth/signup:
  *  put:
  *    tags:
@@ -57,7 +57,7 @@ router.put('/signup',[
 ], authController.signup);
 
 /**
- * @swagger
+ * @openapi
  * /api/auth/login:
  *    post:
  *       tags:

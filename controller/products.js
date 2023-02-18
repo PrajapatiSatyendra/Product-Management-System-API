@@ -41,29 +41,28 @@ exports.getProducts = async (req, res, next) => {
 exports.addProduct= async (req,res,next)=>{
     try {
         const { productName, description, price } = req.body;
-        const { userId } = req.params;
         
         if (!( productName && description && price)) {
           const error = new Error("Bad request.");
           error.statusCode = 400;
           throw error;
         }
-
-        const userData = await Users.findById(userId);
-        if (! userData) {
-            const error = new Error("Access denied.");
-            error.statusCode = 403;
-            throw error;
-        }
+        
+        const userData = await Users.findById(req.userId);
+         if (!userData) {
+           const error = new Error("User could not be found.");
+           error.statusCode = 404;
+           throw error;
+         }
 
          const post = new Products({
-           productName,description,price,userId
+           productName,description,price,userId:userData._id
          });
         const product = await post.save();
         if (! product) {
             throw new Error("Something went wrong.");
         }
-        const user = await Users.findByIdAndUpdate(userId, { $push: { products: product._id } });
+        const user = await Users.findByIdAndUpdate(userData._id, { $push: { products: product._id } });
         if (! user) {
             throw new Error("Something went wrong.");
         }
@@ -81,12 +80,6 @@ exports.getProductsByUserId = async (req, res, next) => {
     try {
         const { userId } = req.params;
 
-        const user = await Users.findById(userId);
-        if(! user){
-         const error = new Error("No user found with is id.");
-          error.statusCode = 404;
-          throw error;
-        }
         const products = await Products.find({ userId: userId });
         if (! products) {
             throw new Error("Something went wrong.");
@@ -146,9 +139,14 @@ exports.getProductsByUserId = async (req, res, next) => {
 
 exports.updateProduct = async (req, res, next) => {
     try {
-         const { userId, productId } = req.params;
+         const { productId } = req.params;
          const { productName, description, price } = req.body;
 
+        if (!(productName && description && price)) {
+          const error = new Error("Bad request.");
+          error.statusCode = 400;
+          throw error;
+        }
         
          const product = await Products.findById(productId);
          if (!product) {
@@ -158,7 +156,7 @@ exports.updateProduct = async (req, res, next) => {
         }
         
         
-        if (product.userId.toString() !== userId) {
+        if (product.userId.toString() !== req.userId.toString()) {
             const error = new Error("Access denied.");
             error.statusCode = 403;
             throw error;
@@ -185,7 +183,7 @@ exports.updateProduct = async (req, res, next) => {
 
 exports.deleteProduct= async(req,res,next)=>{
     try {
-         const { userId, productId } = req.params;
+         const { productId } = req.params;
        
          const product = await Products.findById(productId);
          if (!product) {
@@ -194,11 +192,11 @@ exports.deleteProduct= async(req,res,next)=>{
            throw error;
         }
         
-        if (product.userId.toString() !== userId) {
-            const error = new Error("Access denied.");
-            error.statusCode = 403;
-            throw error;
-        }
+       if (product.userId.toString() !== req.userId.toString()) {
+         const error = new Error("Access denied.");
+         error.statusCode = 403;
+         throw error;
+       }
 
          const deletedProduct = await Products.findByIdAndDelete(productId);
          if (!deletedProduct) {
