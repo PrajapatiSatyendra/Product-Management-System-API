@@ -12,14 +12,14 @@ const options = {
         },
         servers: [
             {
-                url: process.env.BASEURL
+                url: "https://product-manage-api.vercel.app"
             }
         ]
     },
     apis:['./routes/*.js','./controller/*.js','./models/*.js','./middleware/*.js']
 }
 
- const swaggerSpec = swaggerJSDoc(options);
+const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = swaggerSpec;
 
