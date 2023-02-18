@@ -2,8 +2,25 @@ const Products = require('../models/products');
 const Users = require('../models/users');
 const mongoose = require('mongoose');
 
+
+
     
 /*------------------------------------------------------Products------------------------------------------------------------------------*/
+/**
+ * @openapi
+ * components:
+ *    schemas:
+ *       ProductResponse200:
+ *          type: object
+ *          properties:
+ *             message:
+ *                type: string
+ *             data:
+ *                type: object
+ *
+ *
+ */
+
 exports.getProducts = async (req, res, next) => {
     try {
         const products = await Products.find();
@@ -63,7 +80,13 @@ exports.addProduct= async (req,res,next)=>{
 exports.getProductsByUserId = async (req, res, next) => {
     try {
         const { userId } = req.params;
-       
+
+        const user = await Users.findById(userId);
+        if(! user){
+         const error = new Error("No user found with is id.");
+          error.statusCode = 404;
+          throw error;
+        }
         const products = await Products.find({ userId: userId });
         if (! products) {
             throw new Error("Something went wrong.");
@@ -74,12 +97,58 @@ exports.getProductsByUserId = async (req, res, next) => {
     }
 }
 
+/**
+ * @openapi
+ * components:
+ *    schemas:
+ *       ProductResponse201:
+ *          type: object
+ *          properties:
+ *             message:
+ *                type: string
+ *             data:
+ *                type: object
+ *
+ *
+ */
+
+/**
+ * @openapi
+ * components:
+ *    schemas:
+ *       Error404:
+ *          type: object
+ *          properties:
+ *             message:
+ *                type: string
+ *             data:
+ *                type: object
+ *
+ *
+ */
+
+/**
+ * @openapi
+ * components:
+ *    schemas:
+ *       Error403:
+ *          type: object
+ *          properties:
+ *             message:
+ *                type: string
+ *             data:
+ *                type: object
+ *
+ *
+ */
+
+
+
 exports.updateProduct = async (req, res, next) => {
     try {
          const { userId, productId } = req.params;
          const { productName, description, price } = req.body;
 
-       
         
          const product = await Products.findById(productId);
          if (!product) {

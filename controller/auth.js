@@ -5,42 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 /*-----------------------------------------------------------------------------------------------------------------------------*/
-/**
- * @openapi
- * components:
- *    schemas:
- *       UserSignUp:
- *          type: object
- *          required:
- *             - fullName
- *             - email
- *             - password
- *             - role
- *          properties:
- *             userId:
- *                type: string
- *                example: admin122
- *             fullName:
- *                type: string
- *                example: Suresh Dev
- *             email:
- *                type: string
- *                example: satyendra@gmail.com
- *             password:
- *                type: password
- *                example: Satyendra123
- *             role:
- *                type: string
- *                enum: ['Student','Teacher','Admin']
- *                example: Student
- *             status:
- *                type: string
- *                enum: ['active','inactive']
- *                example: active
- *             formalId:
- *                type: integer
- *                example: 1
- */
+
 
 /**
  * @openapi
@@ -52,8 +17,8 @@ const jwt = require("jsonwebtoken");
  *             message:
  *                type: string
  *                description: user created
- *             userId:
- *                type: string
+ *             data:
+ *                type: object
  *
  *
  */
@@ -130,6 +95,10 @@ exports.signup = async (req, res, next) => {
  *                type: string
  *             expiresIn:
  *                type: integer
+ *             email:
+ *                type: string
+ *             userName:
+ *                type: string
  */
 
 /**
@@ -139,16 +108,12 @@ exports.signup = async (req, res, next) => {
  *       LoginRequest:
  *          type: object
  *          required:
- *             - userId
- *             - role
+ *             - email
  *             - password
  *          properties:
- *             userId:
+ *             email:
  *                type: string
- *                example: admin01
- *             role:
- *                type: string
- *                example: Admin
+ *                example: satyendra@gmail.com
  *             password:
  *                type: password
  *                example: password123

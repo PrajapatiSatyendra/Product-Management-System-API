@@ -7,7 +7,7 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'College Management System',
+            title: 'Product Management System API',
             version
         },
         servers: [
@@ -16,7 +16,7 @@ const options = {
             }
         ]
     },
-    apis:['./routes/*.js','./controller/*.js']
+    apis:['./routes/*.js','./controller/*.js','./models/*.js','./middleware/*.js']
 }
 
  const swaggerSpec = swaggerJSDoc(options);

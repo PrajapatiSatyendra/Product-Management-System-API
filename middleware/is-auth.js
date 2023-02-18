@@ -1,4 +1,19 @@
-const jwt=require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+
+/**
+ * @openapi
+ * components:
+ *    schemas:
+ *       Error401:
+ *          type: object
+ *          properties:
+ *             message:
+ *                type: string
+ *             data:
+ *                type: object
+ *
+ *
+ */
 module.exports=(req,res,next)=>{
     const authHeader=req.get('Authorization');
     if (!authHeader) {
@@ -18,7 +33,7 @@ module.exports=(req,res,next)=>{
     }
     if (!decodedToken) {
         const error=new Error('Not authorized');
-        error.statusCode=401;
+        error.statusCode=403;
         throw error;
     }
     req.userId=decodedToken.userId;

@@ -1,6 +1,31 @@
 const mongoose=require('mongoose');
 
-const Schema=mongoose.Schema;
+const Schema = mongoose.Schema;
+
+
+/**
+ * @openapi
+ * components:
+ *    schemas:
+ *       ProductSchema:
+ *          type: object
+ *          required:  
+ *             - productName
+ *             - description
+ *             - price
+ *          properties:
+ *             productName:
+ *                type: string
+ *                example: HP Laptop
+ *             description:
+ *                type: string
+ *                example: This is gaming laptop.
+ *             price:
+ *                type: string
+ *                example: 55000
+ * 
+ *       
+ */
 
 const postSchema=new Schema({
     productName:{

@@ -7,11 +7,11 @@ const authController = require('../controller/auth');
 
 /**
  * @openapi 
- * /auth/signup:
+ * /api/auth/signup:
  *  put:
  *    tags:
  *       - Sign Up
- *    description: This api is for admin signup
+ *    description: This api is for user signup
  *    requestBody:
  *       required: true
  *       content:
@@ -58,7 +58,7 @@ router.put('/signup',[
 
 /**
  * @openapi
- * /auth/login:
+ * /api/auth/login:
  *    post:
  *       tags:
  *          - Login
